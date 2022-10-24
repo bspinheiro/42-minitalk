@@ -6,7 +6,7 @@
 #    By: bda-silv <bda-silv@student.42.rio>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/10 19:01:06 by bda-silv          #+#    #+#              #
-#*   Updated: 2022/10/11 20:57:17 by                  ###   ########.fr       *#
+#*   Updated: 2022/10/13 06:54:59 by                  ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,54 +16,74 @@
 # Criar Integracao com Libft / GNL / FT_Printf
 # Criar Valgrind e Debug
 # Selecionar Quais Usar
-# Colors and Icons
 
-NAME		:=
-
-
-
+#NAME		:=
 #.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.
+#DIR			:=	./
+#_INC		:=	include
+#_SRC		:=	src
+#_OBJ		:=	obj
+#.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*. FLAGS .*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.
+#CC			:=	cc
+#CFLAGS		:=	-Wall -Wextra -Werror
+#CPPFLAGS	:=	-g
 
-DIR			:=	./
-_INC		:=	include
-_SRC		:=	src
-_OBJ		:=	obj
+#AR			:=	ar -rcs
+#RL			:=	ranlib
+#RM			:=	rm -f
 
-#.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.
-
-CC			:=	cc
-CFLAGS		:=	-Wall -Wextra -Werror
-CPPFLAGS	:=	-g
-
-AR			:=	ar -rcs
-RL			:=	ranlib
-RM			:=	rm -f
+SHELL=$$SHELL
 
 
-all:		$(NAME)
 
-$(NAME):	$(OBJS)
-			$(AR) $(NAME) $(OBJS)
-			$(RL) $(NAME)
+#.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*. COLOURS .*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.
+s:=\033[0;
+red:=$s31m
+grn:=$s32m
+yel:=$s33m
+blu:=$s34m
+pnk:=$s35m
+cya:=$s36m
+wht:=$s37m
+rst:=$s00m
 
-clean:
-			$(RM) $(OBJS)
+color := grn() {printf "${grn}$$@${rst}\n"}; \
+		 red() {printf "$(red)$$@$(rst)\n"}; \
+		 yel() {printf "$(yel)$$@$(rst)\n"}; \
+		 blu() {printf "$(blu)$$@$(rst)\n"}; \
+		 pnk() {printf "$(pnk)$$@$(rst)\n"}; \
+		 cya() {printf "$(cya)$$@$(rst)\n"}; \
+		 wht() {printf "$(wht)$$@$(rst)\n"}; \
+		 rst() {printf "$(rst)$$@$(rst)\n"}; \
 
-fclean:		clean
-			$(RM) $(NAME)
+rainbow:
+	     echo "$(red)R$(grn)A$(yel)I$(blu)N$(pnk)B$(cya)O$(wht)W$(rst)"
 
-re:			fclean all
+#.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*. RULES .*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.
 
-.PHONY:				all clean fclean re
+#all:		$(NAME)
 
+#$(NAME):	$(OBJS)
+#			$(AR) $(NAME) $(OBJS)
+#			$(RL) $(NAME)
+
+#clean:
+#			$(RM) $(OBJS)
+
+#fclean:		clean
+#			$(RM) $(NAME)
+
+#re:			fclean all
+
+#.PHONY:		all clean fclean re
 
 #.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*. VERBOSE .*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.
 ifdef VERBOSE
  MAKEFLAGS += --debug
 endif
+
 ifndef VERBOSE
  MAKEFLAGS += --silent
 .SILENT:
 endif
 #.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.
-

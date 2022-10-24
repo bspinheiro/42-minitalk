@@ -1,47 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client.c                                           :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bda-silv <bda-silv@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/10 09:25:17 by bda-silv          #+#    #+#             */
-/*   Updated: 2022/10/24 11:30:10 by bda-silv         ###   ########.fr       */
+/*   Created: 2022/05/19 09:29:54 by bda-silv          #+#    #+#             */
+/*   Updated: 2022/06/18 15:55:29 by bda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
+#include "libft.h"
 
-/*TODO:
- * Exportar putchar e puts
- * Validar PID (Deve ser um numero)  >> atoi
- * */
-
-void	putchar(char c)
+char	*ft_strrchr(const char *s, int c)
 {
-	write(1, &c, 1);
-}
+	char	*save;
 
-void	puts(char *s)
-{
-	while (*s)
-		putchar(*s++);
-	putchar ('\n');
-}
-
-int	main(int argc, char **argv)
-{
-	int		i;
-	char	*pid;
-	char	*msg;
-
-	i = 0;
-	if (argc != 3)
+	if (c == 0)
+		return (ft_strchr(s, c));
+	save = 0;
+	while (*s != '\0')
 	{
-		puts("Unexpected arguments!");
-		return (argc);
+		if (*s == (unsigned char)c)
+			save = (char *)s;
+		s++;
 	}
-	pid = argv[1];
-	msg = argv[2];
-	return (0);
+	return (save);
 }

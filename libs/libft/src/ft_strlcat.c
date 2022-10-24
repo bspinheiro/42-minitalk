@@ -1,47 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client.c                                           :+:      :+:    :+:   */
+/*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bda-silv <bda-silv@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/10 09:25:17 by bda-silv          #+#    #+#             */
-/*   Updated: 2022/10/24 11:30:10 by bda-silv         ###   ########.fr       */
+/*   Created: 2022/06/01 08:31:45 by bda-silv          #+#    #+#             */
+/*   Updated: 2022/06/18 15:47:35 by bda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
+#include "libft.h"
 
-/*TODO:
- * Exportar putchar e puts
- * Validar PID (Deve ser um numero)  >> atoi
- * */
-
-void	putchar(char c)
+size_t	ft_strlcat(char *dst, const char *src, size_t dstlen)
 {
-	write(1, &c, 1);
-}
-
-void	puts(char *s)
-{
-	while (*s)
-		putchar(*s++);
-	putchar ('\n');
-}
-
-int	main(int argc, char **argv)
-{
-	int		i;
-	char	*pid;
-	char	*msg;
+	size_t	i;
+	size_t	j;
 
 	i = 0;
-	if (argc != 3)
+	while (*(dst + i) && i < dstlen)
+		i++;
+	j = 0;
+	while (*(src + j) && (i + j + 1) < dstlen)
 	{
-		puts("Unexpected arguments!");
-		return (argc);
+		*(dst + i + j) = *(src + j);
+		j++;
 	}
-	pid = argv[1];
-	msg = argv[2];
-	return (0);
+	if (i < dstlen)
+		*(dst + i + j) = 0;
+	return (i + ft_strlen(src));
 }

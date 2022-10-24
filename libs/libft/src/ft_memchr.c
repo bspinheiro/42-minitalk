@@ -1,47 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client.c                                           :+:      :+:    :+:   */
+/*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bda-silv <bda-silv@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/10 09:25:17 by bda-silv          #+#    #+#             */
-/*   Updated: 2022/10/24 11:30:10 by bda-silv         ###   ########.fr       */
+/*   Created: 2022/05/24 09:02:33 by bda-silv          #+#    #+#             */
+/*   Updated: 2022/06/18 15:38:17 by bda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
+#include "libft.h"
 
-/*TODO:
- * Exportar putchar e puts
- * Validar PID (Deve ser um numero)  >> atoi
- * */
-
-void	putchar(char c)
+void	*ft_memchr(const void *s, int c, size_t n)
 {
-	write(1, &c, 1);
-}
+	unsigned char	*p;
 
-void	puts(char *s)
-{
-	while (*s)
-		putchar(*s++);
-	putchar ('\n');
-}
-
-int	main(int argc, char **argv)
-{
-	int		i;
-	char	*pid;
-	char	*msg;
-
-	i = 0;
-	if (argc != 3)
+	p = (unsigned char *)s;
+	while (n--)
 	{
-		puts("Unexpected arguments!");
-		return (argc);
+		if (*p != (unsigned char)c)
+			p++;
+		else
+			return (p);
 	}
-	pid = argv[1];
-	msg = argv[2];
 	return (0);
 }

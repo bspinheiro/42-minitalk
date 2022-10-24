@@ -1,47 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client.c                                           :+:      :+:    :+:   */
+/*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bda-silv <bda-silv@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/10 09:25:17 by bda-silv          #+#    #+#             */
-/*   Updated: 2022/10/24 11:30:10 by bda-silv         ###   ########.fr       */
+/*   Created: 2022/06/01 10:50:24 by bda-silv          #+#    #+#             */
+/*   Updated: 2022/06/18 15:55:07 by bda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
+#include "libft.h"
 
-/*TODO:
- * Exportar putchar e puts
- * Validar PID (Deve ser um numero)  >> atoi
- * */
-
-void	putchar(char c)
+char	*ft_strnstr(const char *hay, const char *needle, size_t n)
 {
-	write(1, &c, 1);
-}
+	size_t	i;
+	size_t	n_needle;
 
-void	puts(char *s)
-{
-	while (*s)
-		putchar(*s++);
-	putchar ('\n');
-}
-
-int	main(int argc, char **argv)
-{
-	int		i;
-	char	*pid;
-	char	*msg;
-
+	n_needle = ft_strlen((char *)needle);
+	if (!*needle)
+		return ((char *)hay);
 	i = 0;
-	if (argc != 3)
+	while (*hay && i < n)
 	{
-		puts("Unexpected arguments!");
-		return (argc);
+		if ((ft_strncmp(hay, needle, n_needle) == 0) && (i + n_needle <= n))
+			return ((char *)hay);
+		hay++;
+		i++;
 	}
-	pid = argv[1];
-	msg = argv[2];
 	return (0);
 }

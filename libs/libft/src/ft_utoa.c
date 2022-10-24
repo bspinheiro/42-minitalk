@@ -1,47 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client.c                                           :+:      :+:    :+:   */
+/*   ft_utoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bda-silv <bda-silv@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/10 09:25:17 by bda-silv          #+#    #+#             */
-/*   Updated: 2022/10/24 11:30:10 by bda-silv         ###   ########.fr       */
+/*   Created: 2022/06/29 23:13:22 by bda-silv          #+#    #+#             */
+/*   Updated: 2022/06/30 00:40:35 by bda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
+#include "libft.h"
 
-/*TODO:
- * Exportar putchar e puts
- * Validar PID (Deve ser um numero)  >> atoi
- * */
-
-void	putchar(char c)
+char	*ft_utoa(unsigned int n)
 {
-	write(1, &c, 1);
-}
+	long int	nb;
+	size_t		l;
+	char		*str;
 
-void	puts(char *s)
-{
-	while (*s)
-		putchar(*s++);
-	putchar ('\n');
-}
-
-int	main(int argc, char **argv)
-{
-	int		i;
-	char	*pid;
-	char	*msg;
-
-	i = 0;
-	if (argc != 3)
+	nb = n;
+	l = ft_nbrlen(n, 10) - 1;
+	str = ft_calloc(ft_nbrlen(n, 10) + 1, sizeof(char));
+	if (!str)
+		return (NULL);
+	if (nb == 0)
+		str[0] = '0';
+	while (nb != 0)
 	{
-		puts("Unexpected arguments!");
-		return (argc);
+		str[l--] = nb % 10 + '0';
+		nb /= 10;
 	}
-	pid = argv[1];
-	msg = argv[2];
-	return (0);
+	return (str);
 }

@@ -6,7 +6,7 @@
 /*   By: bda-silv <bda-silv@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 09:25:17 by bda-silv          #+#    #+#             */
-/*   Updated: 2022/10/24 11:30:10 by bda-silv         ###   ########.fr       */
+/*   Updated: 2022/10/24 22:53:52 by bda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
  * Validar PID (Deve ser um numero)  >> atoi
  * */
 
+// lkjalsj
 void	putchar(char c)
 {
 	write(1, &c, 1);

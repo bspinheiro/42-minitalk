@@ -3,49 +3,85 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pmiceli <marvin@42.fr>                     +#+  +:+       +#+         #
+#    By: bda-silv <bda-silv@student.42.rio>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2017/11/07 14:44:04 by pmiceli           #+#    #+#              #
-#*   Updated: 2022/10/24 16:31:26 by                  ###   ########.fr       *#
+#    Created: 2022/10/24 16:48:08 by bda-silv          #+#    #+#              #
+#*   Updated: 2022/10/24 22:53:10 by                  ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
-NAME = libft.a
+NAME				=	libft.a
 
-SRCS_DIR = ./src/
-SRCS_NAME = $(shell ls $(SRCS_DIR) | grep -E ".c")
-SRCS = $(addprefix $(SRCDIR), $(SRCS_NAME))
-INC = ./inc/
-OBJS_DIR = ./obj/
-OBJS = $(addprefix $(OBJS_DIR), $(SRCS:.c=.o))
+SRCS_DIR			=	./src/
+OBJS_DIR			=	./obj/
+INCS_DIR			=	./inc/
 
-CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+SRCS_NAME			=	$(shell ls $(SRCS_DIR) | grep -E ".c")
+SRCS				=	$(addprefix $(SRCDIR), $(SRCS_NAME))
+OBJS				=	$(addprefix $(OBJS_DIR), $(SRCS:.c=.o))
+
+CC					=	cc
+CFLAGS				=	-Wall -Wextra -Werror
+
+#.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*. FORMATS .*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.
+
+ok:=✓
+ko:=✗
+ck:=・
+
+s:=\033[0
+red:=$s31m
+grn:=$s32m
+yel:=$s33m
+blu:=$s34m
+pnk:=$s35m
+cya:=$s36m
+wht:=$s37m
+rst:=$s00m
+ora:=$s38;2;255;153;0m
+
+#.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*. RULES .*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.
 
 all : $(OBJS_DIR) $(NAME)
 
-$(OBJS_DIR):
-	@mkdir -p $(OBJS_DIR)
-#	@echo "\033[033m➼	\033[033mCreating Libft's objects\033m"
+$(OBJS_DIR) :
+	mkdir -p $(OBJS_DIR)
 
-$(OBJS_DIR)%.o:$(SRCS_DIR)%.c
-	@echo "\033[038;2;255;153;0m⧖	Creating	$@\033[0m"
-	@$(CC) $(CFLAGS) -I$(INC) -o $@ -c $<
+$(OBJS_DIR)%.o : $(SRCS_DIR)%.c
+	@echo "$(ora)$(ck)	Creating		$@$(rst)"
+	$(CC) $(CFLAGS) -I$(INCS_DIR) -o $@ -c $<
 
 $(NAME) : $(OBJS)
-	@echo "\033[032m✓	\033[0m\033[032mLibft's objects created\033[0m"
-	@ar rcs $(NAME) $(OBJS)
-	@ranlib $(NAME)
-	@echo "\033[032m✓	\033[0m\033[032mLibft created\033[0m"
+	ar rcs $(NAME) $(OBJS)
+	ranlib $(NAME)
+	@echo "$(grn)$(ok)	Compiled		$@$(rst)"
 
 clean :
-	@rm -rf $(OBJS_DIR)
-	@echo "\033[36m❌	\033[0m\033[31mLibft's objets removed\033[0m"
+	rm -rf $(OBJS_DIR)
+	@echo "$(red)$(ko)	Removing		$(OBJS_DIR)$(rst)"
 
 fclean : clean
-	@rm -rf $(NAME)
-	@echo "\033[036m❌	\033[0m\033[31mLibft removed"
+	rm -rf $(NAME)
+	@echo "$(red)$(ko)	Removing		$(NAME)$(rst)"
 
 re : fclean all
 
-.PHONY : all clean fclean re
+norm:
+	@echo "$(pnk)"
+	norminette | grep "Error" || echo "$(grn)$(ok)	Norminette		 OK!"
+
+rainbow :
+	@echo "$(red)R$(grn)A$(yel)I$(blu)N$(pnk)B$(cya)O$(wht)W$(rst)"
+
+.PHONY : all clean fclean re norm rainbow
+
+#.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*. VERBOSE .*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.
+ifdef VERBOSE
+ MAKEFLAGS += --debug
+endif
+
+ifndef VERBOSE
+ MAKEFLAGS += --silent
+.SILENT:
+endif
+#.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.

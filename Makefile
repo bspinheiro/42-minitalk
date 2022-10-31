@@ -5,38 +5,47 @@
 #                                                     +:+ +:+         +:+      #
 #    By: bda-silv <bda-silv@student.42.rio>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/10/10 19:01:06 by bda-silv          #+#    #+#              #
-#*   Updated: 2022/10/13 15:01:25 by                  ###   ########.fr       *#
+#    Created: 2022/10/24 16:48:08 by bda-silv          #+#    #+#              #
+#*   Updated: 2022/10/31 15:23:40 by                  ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
+# TODO
+# * Debug
+# * Valgrind
+# * .gitignore
+# * Evaluation
+#
+#
+#
+#.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*. SPECS .*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.
 
-# TODO:
-# Incluir .gitignore caso nao exista
-# Append dos Diretórios
-# Criar Integracao com Libft / GNL / FT_Printf
-# Criar Valgrind e Debug
-# Selecionar Quais Usar
+NAME				=	ft_printf.a
 
-#NAME		:=
-#.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.
-#DIR			:=	./
-#_INC		:=	include
-#_SRC		:=	src
-#_OBJ		:=	obj
-#.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*. FLAGS .*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.
-#CC			:=	cc
-#CFLAGS		:=	-Wall -Wextra -Werror
-#CPPFLAGS	:=	-g
+SRCS_DIR			=	./src/
+OBJS_DIR			=	./obj/
+INCS_DIR			=	./inc/
+LIBS_DIR			=	..
 
-#AR			:=	ar -rcs
-#RL			:=	ranlib
-#RM			:=	rm -f
+#.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*. SETUP .*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.
 
-SHELL=$$SHELL
+SRCS_NAME			=	$(shell ls $(SRCS_DIR) | grep -E ".c")
+SRCS				=	$(addprefix $(SRCDIR), $(SRCS_NAME))
+OBJS				=	$(addprefix $(OBJS_DIR), $(SRCS:.c=.o))
 
+CC					=	cc
+CFLAGS				=	-Wall -Wextra -Werror
+CPPFLAGS			=	-g
 
-#.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*. COLOURS .*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.
-s:=\033[0;
+MD					=	mkdir -p
+AR					=	ar rcs
+RL					=	ranlib
+RM					=	rm -rf
+
+#.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*. VISUALS .*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.
+ok:=✓
+ko:=✗
+ck:=・
+s:=\033[0
 red:=$s31m
 grn:=$s32m
 yel:=$s33m
@@ -45,36 +54,41 @@ pnk:=$s35m
 cya:=$s36m
 wht:=$s37m
 rst:=$s00m
+ora:=$s38;2;255;153;0m
+#.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*. RULES .*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.
 
-color := grn() {printf "${grn}$$@${rst}\n"}; \
-		 red() {printf "$(red)$$@$(rst)\n"}; \
-		 yel() {printf "$(yel)$$@$(rst)\n"}; \
-		 blu() {printf "$(blu)$$@$(rst)\n"}; \
-		 pnk() {printf "$(pnk)$$@$(rst)\n"}; \
-		 cya() {printf "$(cya)$$@$(rst)\n"}; \
-		 wht() {printf "$(wht)$$@$(rst)\n"}; \
-		 rst() {printf "$(rst)$$@$(rst)\n"}; \
+all : $(OBJS_DIR) $(NAME)
 
-rainbow:
-		 echo "$(red)R$(grn)A$(yel)I$(blu)N$(pnk)B$(cya)O$(wht)W$(rst)"
+$(OBJS_DIR) :
+	$(MD) $(OBJS_DIR)
 
-#.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*. RULES .*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.
+$(OBJS_DIR)%.o : $(SRCS_DIR)%.c
+	@echo "$(ora)$(ck)	Creating		$@$(rst)"
+	$(CC) $(CFLAGS) -I$(INCS_DIR) -o $@ -c $<
 
-#all:		$(NAME)
+$(NAME) : $(OBJS)
+	$(AR) $(NAME) $(OBJS)
+	$(RL) $(NAME)
+	@echo "$(grn)$(ok)	Compiled		$@$(rst)"
 
-#$(NAME):	$(OBJS)
-#			$(AR) $(NAME) $(OBJS)
-#			$(RL) $(NAME)
+clean :
+	$(RM) $(OBJS_DIR)
+	@echo "$(red)$(ko)	Removing		$(OBJS_DIR)$(rst)"
 
-#clean:
-#			$(RM) $(OBJS)
+fclean : clean
+	$(RM) $(NAME)
+	@echo "$(red)$(ko)	Removing		$(NAME)$(rst)"
 
-#fclean:		clean
-#			$(RM) $(NAME)
+re : fclean all
 
-#re:			fclean all
+norm:
+	@echo "$(pnk)"
+	norminette | grep "Error" || echo "$(grn)$(ok)	Norminette		 OK!"
 
-#.PHONY:		all clean fclean re
+rainbow :
+	@echo "$(red)R$(grn)A$(yel)I$(blu)N$(pnk)B$(cya)O$(wht)W$(rst)"
+
+.PHONY : all clean fclean re norm rainbow
 
 #.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*. VERBOSE .*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.
 ifdef VERBOSE

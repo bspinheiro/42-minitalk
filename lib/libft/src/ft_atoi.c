@@ -6,11 +6,12 @@
 /*   By: bda-silv <bda-silv@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 10:19:53 by bda-silv          #+#    #+#             */
-/*   Updated: 2022/06/18 15:35:28 by bda-silv         ###   ########.fr       */
+/*   Updated: 2022/10/31 15:12:15 by bda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+
 
 static int	ft_isspace(int c)
 {

@@ -6,7 +6,7 @@
 #    By: bda-silv <bda-silv@student.42.rio>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/24 16:48:08 by bda-silv          #+#    #+#              #
-#*   Updated: 2022/10/31 16:37:50 by                  ###   ########.fr       *#
+#*   Updated: 2022/10/31 16:55:47 by                  ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 # TODO
@@ -85,13 +85,15 @@ ign :
 	fi
 
 comp: re
-	if [-f 'main.c' ]
+	$(CC) *.c
 
-dbg :
+dbg : val
+	lldb a.out
 
-val :
+val : comp
+	valgrind
 
-deli : fclean ign norm
+deli : norm ign fclean
 	test -f main.c && mv main.c .main.c || echo "$(ora)$(ck)	Missing main.c"
 	$(RM) *.o *.a *.out *.DSYM .DS_Store
 	@echo "$(grn)$(ok)	Files ready to delivery!"

@@ -6,7 +6,7 @@
 #    By: bda-silv <bda-silv@student.42.rio>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/24 16:48:08 by bda-silv          #+#    #+#              #
-#*   Updated: 2022/10/31 21:08:19 by                  ###   ########.fr       *#
+#*   Updated: 2022/11/01 17:57:33 by                  ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 #
@@ -39,6 +39,21 @@ AR					=	ar rcs
 RL					=	ranlib
 RM					=	rm -rf
 
+#.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*. ROUTE .*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.
+
+ifeq (run,$(firstword $(MAKECMDGOALS)))
+  RUN_ARGS := $(wordlist 2,$(words $(MAKECMDGOALS)),$(MAKECMDGOALS))
+  $(eval $(RUN_ARGS):;@:)
+endif
+ifeq (leaks,$(firstword $(MAKECMDGOALS)))
+  RUN_ARGS := $(wordlist 2,$(words $(MAKECMDGOALS)),$(MAKECMDGOALS))
+  $(eval $(RUN_ARGS):;@:)
+endif
+ifeq (debug,$(firstword $(MAKECMDGOALS)))
+  RUN_ARGS := $(wordlist 2,$(words $(MAKECMDGOALS)),$(MAKECMDGOALS))
+  $(eval $(RUN_ARGS):;@:)
+endif
+
 #.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*. RULES .*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.
 
 all : $(OBJS_DIR) $(NAME)
@@ -69,6 +84,23 @@ norm :
 	@echo "$(pnk)"
 	norminette | grep "Error" || echo "$(grn)$(ok)	Norminette		OK!"
 
+comp : all
+	$(CC) $(CFLAGS) $(CPPFLAGS) $(CFILES) $(NAME) -o $(CEXEC)
+	@echo "$(grn)$(ok)	Compiled		$(CEXEC)$(rst)"
+
+run : comp
+	@echo "$(grn)$(ok)	Running			$(CEXEC)$(rst)"
+	#HELLO = $(RUN_ARGS)
+	./$(CEXEC) $(RUN_ARGS); echo "$(cya)\n"
+
+debug : leaks
+	@echo "$(pnk)"
+	lldb $(CEXEC) $(RUN_ARGS)
+
+leaks :
+	valgrind --leak-check=full --show-leak-kinds=all --trace-children=yes \
+	$(addprefix ./, $(CEXEC)) $(RUN_ARGS)
+
 gig :
 	if [ -f '.gitignore' ]; \
 	then \
@@ -84,19 +116,6 @@ gig :
 		cat -n .gitignore ; \
 	fi
 
-comp : all
-	$(CC) $(CFLAGS) $(CPPFLAGS) $(CFILES) $(NAME) -o $(CEXEC)
-	@echo "$(grn)$(ok)	Running			$(CEXEC)$(rst)"
-	./$(CEXEC); echo "$(cya)\n"
-
-debug : leaks
-	@echo "$(pnk)"
-	lldb $(CEXEC)
-
-leaks : comp
-	valgrind --leak-check=full --show-leak-kinds=all --trace-children=yes \
-	$(addprefix ./, $(CEXEC))
-
 sure : norm gig
 	test -f main.c && mv main.c .main.c \
 	|| echo "$(ora)$(ck)	Skipping		main.c"
@@ -111,7 +130,7 @@ c : comp
 
 dbg : debug
 
-.PHONY : all clean fclean re norm gig comp debug leaks sure rainbow c dbg
+.PHONY : all clean fclean re norm gig comp debug leaks sure rainbow c dbg run
 
 #.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*. VERBOSE .*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.
 

@@ -6,7 +6,7 @@
 /*   By: bda-silv <bda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 10:37:45 by bda-silv          #+#    #+#             */
-/*   Updated: 2022/10/31 19:07:55 by bda-silv         ###   ########.fr       */
+/*   Updated: 2022/11/01 10:42:21 by bda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include "ft_printf.h"
+# include "get_next_line.h"
 
 int				ft_isalpha(int c);
 int				ft_isdigit(int c);

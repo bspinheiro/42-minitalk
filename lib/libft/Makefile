@@ -6,17 +6,14 @@
 #    By: bda-silv <bda-silv@student.42.rio>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/24 16:48:08 by bda-silv          #+#    #+#              #
-#*   Updated: 2022/10/31 16:55:47 by                  ###   ########.fr       *#
+#*   Updated: 2022/10/31 21:08:19 by                  ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
-# TODO
-# * Debug
-# * Valgrind
-# * Compile
 #
 #.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*. SPECS .*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.
 
-NAME				=	libft.a
+PROJ				=	libft
+EXEC				=	main
 
 SRCS_DIR			=	./src/
 OBJS_DIR			=	./obj/
@@ -25,13 +22,17 @@ LIBS_DIR			=	..
 
 #.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*. SETUP .*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.
 
-SRCS_NAME			=	$(shell ls $(SRCS_DIR) | grep -E ".c")
+SRCS_NAME			=	$(shell ls $(SRCS_DIR) | grep -E ".+\.c")
 SRCS				=	$(addprefix $(SRCDIR), $(SRCS_NAME))
 OBJS				=	$(addprefix $(OBJS_DIR), $(SRCS:.c=.o))
+NAME				=	$(addsuffix .a, $(PROJ))
+
 
 CC					=	cc
 CFLAGS				=	-Wall -Wextra -Werror
 CPPFLAGS			=	-g
+CFILES				=	$(shell ls -a . | grep -E ".+\.c")
+CEXEC				=	$(addsuffix .out, $(EXEC))
 
 MD					=	mkdir -p
 AR					=	ar rcs
@@ -66,42 +67,51 @@ re : fclean all
 
 norm :
 	@echo "$(pnk)"
-	norminette | grep "Error" || echo "$(grn)$(ok)	Norminette		 OK!"
+	norminette | grep "Error" || echo "$(grn)$(ok)	Norminette		OK!"
 
-ign :
+gig :
 	if [ -f '.gitignore' ]; \
 	then \
-		echo "$(red)$(ko)	.gitignore is already set.$(ora)" ; \
-		cat -n .gitignore ; \
+		echo "$(grn)$(ok)	.gitignore		OK!$(ora)" ; \
 	else \
-		echo "$(grn)$(ok)	.gitignore was created.$(ora)" ; \
+		echo "$(ora)$(ck)	Creating		.gitignore$(ora)" ; \
 		echo ".*" >> .gitignore ; \
 		echo "*.o" >> .gitignore ; \
 		echo "*.a" >> .gitignore ; \
 		echo "*.out" >> .gitignore ; \
-		echo "*.DSYM" >> .gitignore ; \
+		echo "*.dSYM" >> .gitignore ; \
 		echo ".DS_Store" >> .gitignore ; \
 		cat -n .gitignore ; \
 	fi
 
-comp: re
-	$(CC) *.c
+comp : all
+	$(CC) $(CFLAGS) $(CPPFLAGS) $(CFILES) $(NAME) -o $(CEXEC)
+	@echo "$(grn)$(ok)	Running			$(CEXEC)$(rst)"
+	./$(CEXEC); echo "$(cya)\n"
 
-dbg : val
-	lldb a.out
+debug : leaks
+	@echo "$(pnk)"
+	lldb $(CEXEC)
 
-val : comp
-	valgrind
+leaks : comp
+	valgrind --leak-check=full --show-leak-kinds=all --trace-children=yes \
+	$(addprefix ./, $(CEXEC))
 
-deli : norm ign fclean
-	test -f main.c && mv main.c .main.c || echo "$(ora)$(ck)	Missing main.c"
-	$(RM) *.o *.a *.out *.DSYM .DS_Store
-	@echo "$(grn)$(ok)	Files ready to delivery!"
+sure : norm gig
+	test -f main.c && mv main.c .main.c \
+	|| echo "$(ora)$(ck)	Skipping		main.c"
+	$(RM) *.o *.a *.out *.dSYM .DS_Store
+	$(MAKE) fclean
+	@echo "$(grn)$(ok)	Delivery		DONE!"
 
 rainbow :
 	@echo "$(red)R$(grn)A$(yel)I$(blu)N$(pnk)B$(cya)O$(wht)W$(rst)"
 
-.PHONY : all clean fclean re norm ign comp dbg val deli rainbow
+c : comp
+
+dbg : debug
+
+.PHONY : all clean fclean re norm gig comp debug leaks sure rainbow c dbg
 
 #.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*. VERBOSE .*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.
 

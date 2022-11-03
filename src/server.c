@@ -1,33 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client.c                                           :+:      :+:    :+:   */
+/*   server.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bda-silv <bda-silv@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/10 09:25:17 by bda-silv          #+#    #+#             */
-/*   Updated: 2022/11/03 14:47:11 by bda-silv         ###   ########.fr       */
+/*   Created: 2022/11/03 14:42:50 by bda-silv          #+#    #+#             */
+/*   Updated: 2022/11/03 14:47:10 by bda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "client.h"
+#include "server.h"
 
-/*TODO:
- * 
- * */
-
-int	main(int argc, char **argv)
+int	main(void)
 {
-	int		pid;
-	char	*msg;
-
-	if (argc != 3)
-	{
-		ft_puts("Unexpected arguments!");
-		return (argc);
-	}
-	pid = ft_atoi(argv[1]);
-	msg = argv[2];
-	ft_printf("%i %s\n", pid, msg);
+	ft_puts("server");
 	return (0);
 }

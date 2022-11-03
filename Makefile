@@ -6,7 +6,7 @@
 #    By: bda-silv <bda-silv@student.42.rio>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/24 16:48:08 by bda-silv          #+#    #+#              #
-#*   Updated: 2022/11/03 13:22:54 by                  ###   ########.fr       *#
+#*   Updated: 2022/11/03 13:51:30 by                  ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 #
@@ -91,9 +91,8 @@ norm :
 comp : all
 
 run : comp
-	@echo "$(grn)$(ok)	Running			$(CEXEC)$(rst)"
-	#HELLO = $(RUN_ARGS)
-	./$(RUN_ARGS); echo "$(cya)\n"
+	@echo "$(grn)$(ok)	Running			$(RUN_ARGS)$(cya)"
+	./$(RUN_ARGS); echo "$(rst)\n"
 
 debug : leaks
 	@echo "$(pnk)"

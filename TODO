@@ -1,0 +1,11 @@
+TODO:
+* Fix Makefile for server side
+
+SERVER:
+* Show PID
+* Listen for signals
+
+CLIENT:
+* Send Signal
+
+

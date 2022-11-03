@@ -1,21 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   client.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bda-silv <bda-silv@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/10 10:41:07 by bda-silv          #+#    #+#             */
-/*   Updated: 2022/06/10 11:03:13 by bda-silv         ###   ########.fr       */
+/*   Created: 2022/11/03 10:30:03 by bda-silv          #+#    #+#             */
+/*   Updated: 2022/11/03 11:35:23 by bda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef CLIENT_H
+# define CLIENT_H
 
-void	ft_putstr_fd(char *s, int fd)
-{
-	if (!s)
-		return ;
-	while (*s)
-		ft_putchar_fd(*s++, fd);
-}
+# include "../lib/libft/inc/libft.h"
+
+#endif

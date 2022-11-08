@@ -6,7 +6,7 @@
 /*   By: bda-silv <bda-silv@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 14:43:14 by bda-silv          #+#    #+#             */
-/*   Updated: 2022/11/03 14:48:18 by bda-silv         ###   ########.fr       */
+/*   Updated: 2022/11/08 02:35:19 by bda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,7 @@
 # define SERVER_H
 
 # include "../lib/libft/inc/libft.h"
+# include <unistd.h>
+# include <signal.h>
 
 #endif

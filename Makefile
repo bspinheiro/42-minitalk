@@ -6,7 +6,7 @@
 #    By: bda-silv <bda-silv@student.42.rio>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/24 16:48:08 by bda-silv          #+#    #+#              #
-#*   Updated: 2022/11/08 00:01:51 by                  ###   ########.fr       *#
+#*   Updated: 2022/11/08 02:19:50 by                  ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 #
@@ -85,8 +85,7 @@ fclean :
 re : fclean all
 
 norm :
-	@echo "$(pnk)" | \
-	norminette | grep "Error" || echo "$(grn)$(ok)	Norminette		OK!"
+	@echo "$(pnk)\c"; norminette | grep "Error" || echo "$(grn)$(ok)	Norminette		OK!"
 
 run : all
 	@echo "$(grn)$(ok)	Running			$(RUN_ARGS)$(cya)"

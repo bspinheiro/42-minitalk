@@ -6,7 +6,7 @@
 /*   By: bda-silv <bda-silv@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 10:30:03 by bda-silv          #+#    #+#             */
-/*   Updated: 2022/11/03 11:35:23 by bda-silv         ###   ########.fr       */
+/*   Updated: 2022/11/08 02:34:15 by bda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,6 @@
 # define CLIENT_H
 
 # include "../lib/libft/inc/libft.h"
+# include <signal.h>
 
 #endif

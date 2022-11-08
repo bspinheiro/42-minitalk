@@ -6,7 +6,7 @@
 /*   By: bda-silv <bda-silv@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 14:42:50 by bda-silv          #+#    #+#             */
-/*   Updated: 2022/11/03 14:47:10 by bda-silv         ###   ########.fr       */
+/*   Updated: 2022/11/07 19:12:48 by bda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,6 @@
 
 int	main(void)
 {
-	ft_puts("server");
+	ft_puts("server to serve you");
 	return (0);
 }

@@ -6,7 +6,7 @@
 #    By: bda-silv <bda-silv@student.42.rio>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/24 16:48:08 by bda-silv          #+#    #+#              #
-#*   Updated: 2022/11/03 13:51:30 by                  ###   ########.fr       *#
+#*   Updated: 2022/11/08 00:01:51 by                  ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 #
@@ -28,7 +28,7 @@ SRCS				=	$(addprefix $(SRCS_DIR), $(SRCS_NAME))
 OBJS				=	$(addprefix $(OBJS_DIR), $(SRCS_NAME:.c=.o))
 LIBS				=	$(addsuffix $(LIBS_NAME:/=).a, $(LIBS_PATH))
 SRC					=	$(SRCS_NAME:.c=)
-NAME				=	$(SRCS_NAME)
+NAME				=	$(SRC)
 
 CC					=	cc
 CFLAGS				=	-Wall -Wextra -Werror
@@ -69,7 +69,7 @@ $(LIBS) :
 	$(MAKE) -C $(LIBS_PATH)
 
 $(NAME) : $(OBJS) $(LIBS)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBS) -o $(SRC)
+	$(CC) $(CFLAGS) $(LIBS) -o $@ $(addprefix $(OBJS_DIR), $@.o)
 	@echo "$(grn)$(ok)	Compiled		$@$(rst)"
 
 clean :
@@ -85,16 +85,14 @@ fclean :
 re : fclean all
 
 norm :
-	@echo "$(pnk)"
+	@echo "$(pnk)" | \
 	norminette | grep "Error" || echo "$(grn)$(ok)	Norminette		OK!"
 
-comp : all
-
-run : comp
+run : all
 	@echo "$(grn)$(ok)	Running			$(RUN_ARGS)$(cya)"
 	./$(RUN_ARGS); echo "$(rst)\n"
 
-debug : leaks
+debug :
 	@echo "$(pnk)"
 	lldb $(RUN_ARGS)
 
@@ -105,7 +103,7 @@ leaks :
 gig :
 	if [ -f '.gitignore' ]; \
 	then \
-		echo "$(grn)$(ok)	.gitignore		OK!$(ora)" ; \
+		echo "$(grn)$(ok)	.gitignore		OK!$(ora)$(rst)" ; \
 	else \
 		echo "$(ora)$(ck)	Creating		.gitignore$(ora)" ; \
 		echo ".*" >> .gitignore ; \
@@ -117,21 +115,23 @@ gig :
 		cat -n .gitignore ; \
 	fi
 
-sure : norm gig
-	test -f main.c && mv main.c .main.c \
-	|| echo "$(ora)$(ck)	Skipping		main.c"
+ready:
+	#test -f main.c && mv main.c .main.c \
+	#|| echo "$(ora)$(ck)	Skipping		main.c"
+	-mv main.c .main.c 2>/dev/null \
+	&& echo "$(ora)$(ck)	Creating		.main.c" \
+	|| echo "$(red)$(ko)	Skipping		.main.c"
 	$(RM) *.o *.a *.out *.dSYM .DS_Store
-	$(MAKE) fclean
-	@echo "$(grn)$(ok)	Delivery		DONE!"
+	@echo "$(red)$(ko)	Removing		dSYMs$(rst)"
+	-for f in *; do if [ $$f != 'Makefile' ]; then rm $$f 2>/dev/null; fi; done
+	@echo "$(red)$(ko)	Removing		files$(rst)"
+	$(MAKE) fclean gig norm
 
 rainbow :
 	@echo "$(red)R$(grn)A$(yel)I$(blu)N$(pnk)B$(cya)O$(wht)W$(rst)"
 
-c : comp
 
-dbg : debug
-
-.PHONY : all clean fclean re norm gig comp debug leaks sure rainbow c dbg run
+.PHONY : all clean fclean re norm gig run debug leaks ready rainbow
 
 #.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*. VERBOSE .*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.
 

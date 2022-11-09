@@ -6,7 +6,7 @@
 #    By: bda-silv <bda-silv@student.42.rio>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/24 16:48:08 by bda-silv          #+#    #+#              #
-#*   Updated: 2022/11/08 18:54:37 by                  ###   ########.fr       *#
+#*   Updated: 2022/11/09 13:58:25 by                  ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 #
@@ -31,7 +31,7 @@ SRC					=	$(SRCS_NAME:.c=)
 NAME				=	$(SRC)
 
 CC					=	cc
-CFLAGS				=	-Wall -Wextra -Werror
+CFLAGS				=	-Wall -Wextra -Werror -g
 CPPFLAGS			=	-g
 
 MD					=	mkdir -p
@@ -85,7 +85,8 @@ fclean :
 re : fclean all
 
 norm :
-	@echo "$(pnk)\c"; norminette | grep "Error" || echo "$(grn)$(ok)	Norminette		OK!"
+	@echo "$(pnk)\c"; \
+	norminette | grep "Error" || echo "$(grn)$(ok)	Norminette		OK!"
 
 run : all
 	@echo "$(grn)$(ok)	Running			$(RUN_ARGS)$(rst)\n"
@@ -111,12 +112,12 @@ gig :
 		echo "*.out" >> .gitignore ; \
 		echo "*.dSYM" >> .gitignore ; \
 		echo ".DS_Store" >> .gitignore ; \
+		echo "client" >> .gitignore ; \
+		echo "server" >> .gitignore ; \
 		cat -n .gitignore ; \
 	fi
 
 ready:
-	#test -f main.c && mv main.c .main.c \
-	#|| echo "$(ora)$(ck)	Skipping		main.c"
 	-mv main.c .main.c 2>/dev/null \
 	&& echo "$(ora)$(ck)	Creating		.main.c" \
 	|| echo "$(red)$(ko)	Skipping		.main.c"
@@ -127,8 +128,7 @@ ready:
 	$(MAKE) fclean gig norm
 
 rainbow :
-	@echo "$(red)R$(grn)A$(yel)I$(blu)N$(pnk)B$(cya)O$(wht)W$(rst)"
-
+	@echo "$(red)R$(grn)A$(yel)I$(blu)N$(pnk)B$ZZ(cya)O$(wht)W$(rst)"
 
 .PHONY : all clean fclean re norm gig run debug leaks ready rainbow
 

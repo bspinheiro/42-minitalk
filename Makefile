@@ -6,7 +6,7 @@
 #    By: bda-silv <bda-silv@student.42.rio>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/24 16:48:08 by bda-silv          #+#    #+#              #
-#*   Updated: 2022/11/08 02:19:50 by                  ###   ########.fr       *#
+#*   Updated: 2022/11/08 18:54:37 by                  ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 #
@@ -69,7 +69,7 @@ $(LIBS) :
 	$(MAKE) -C $(LIBS_PATH)
 
 $(NAME) : $(OBJS) $(LIBS)
-	$(CC) $(CFLAGS) $(LIBS) -o $@ $(addprefix $(OBJS_DIR), $@.o)
+	-$(CC) $(CFLAGS) $(LIBS) -o $@ $(addprefix $(OBJS_DIR), $@.o)
 	@echo "$(grn)$(ok)	Compiled		$@$(rst)"
 
 clean :
@@ -88,8 +88,8 @@ norm :
 	@echo "$(pnk)\c"; norminette | grep "Error" || echo "$(grn)$(ok)	Norminette		OK!"
 
 run : all
-	@echo "$(grn)$(ok)	Running			$(RUN_ARGS)$(cya)"
-	./$(RUN_ARGS); echo "$(rst)\n"
+	@echo "$(grn)$(ok)	Running			$(RUN_ARGS)$(rst)\n"
+	./$(RUN_ARGS); echo "$(rst)"
 
 debug :
 	@echo "$(pnk)"

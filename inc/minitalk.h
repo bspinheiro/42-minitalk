@@ -1,20 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.h                                           :+:      :+:    :+:   */
+/*   minitalk.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bda-silv <bda-silv@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/03 14:43:14 by bda-silv          #+#    #+#             */
-/*   Updated: 2022/11/08 02:35:19 by bda-silv         ###   ########.fr       */
+/*   Created: 2022/11/09 12:54:11 by bda-silv          #+#    #+#             */
+/*   Updated: 2022/11/09 13:16:04 by bda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SERVER_H
-# define SERVER_H
+#ifndef MINITALK_H
+# define MINITALK_H
+# define WAIT_TIME 50
 
-# include "../lib/libft/inc/libft.h"
 # include <unistd.h>
 # include <signal.h>
+# include "../lib/libft/inc/libft.h"
 
 #endif

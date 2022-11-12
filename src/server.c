@@ -6,16 +6,16 @@
 /*   By: bda-silv <bda-silv@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 14:42:50 by bda-silv          #+#    #+#             */
-/*   Updated: 2022/11/09 13:15:13 by bda-silv         ###   ########.fr       */
+/*   Updated: 2022/11/10 15:18:42 by bda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "../inc/minitalk.h"
 
 void	sig_handler(int signal)
 {
-	static int				bits = 0;
-	static int				c = 0;
+	static int		bits = 0;
+	static int		c = 0;
 
 	bits++;
 	c <<= 1;

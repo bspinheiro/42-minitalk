@@ -6,11 +6,11 @@
 /*   By: bda-silv <bda-silv@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 09:25:17 by bda-silv          #+#    #+#             */
-/*   Updated: 2022/11/09 13:02:09 by bda-silv         ###   ########.fr       */
+/*   Updated: 2022/11/12 14:57:27 by bda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "../inc/minitalk.h"
 
 void	send_bits(int c, int pid)
 {
@@ -44,9 +44,9 @@ int	main(int argc, char **argv)
 	int		pid;
 	char	*msg;
 
-	if (argc != 3)
+	if (argc != 3 || ft_atoi(argv[1]) == 0)
 	{
-		ft_puts("Unexpected arguments!\n ./client [PID] [MSG]");
+		ft_puts("Unexpected arguments!\n Usage: ./client [PID] [MSG]");
 		return (argc);
 	}
 	pid = ft_atoi(argv[1]);
